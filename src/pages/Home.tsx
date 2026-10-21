@@ -1,4 +1,3 @@
-import { Navbar } from '../components/Navbar'
 import { Sidebar } from '../components/Sidebar'
 import { ProductCard } from '../components/ProductCard'
 import { useProductStore } from '../store/useProductStore'
@@ -26,8 +25,6 @@ export const Home = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
-      <Navbar cartItemsCount={getTotalItems()} userRole="customer" />
-
       <div className="flex-1 max-w-7xl w-full mx-auto p-6 flex gap-6">
         <Sidebar
           categories={categories}

@@ -1,4 +1,4 @@
-import React from 'react'
+import { Link } from 'react-router-dom'
 import { User } from '../types'
 
 interface NavbarProps {
@@ -12,9 +12,9 @@ export const Navbar = ({ cartItemsCount, userRole }: NavbarProps) => {
       <div className="text-xl font-bold text-blue-600">Mini Store</div>
 
       <div className="flex items-center gap-6 font-medium">
-        <a href="#" className="hover:text-blue-600 transition">
+        <Link to="/" className="hover:text-blue-600 transition">
           Home Page
-        </a>
+        </Link>
 
         {userRole === 'admin' && (
           <a href="#" className="hover:text-blue-600 transition text-amber-600">
@@ -22,14 +22,14 @@ export const Navbar = ({ cartItemsCount, userRole }: NavbarProps) => {
           </a>
         )}
 
-        <div className="relative cursor-pointer">
+        <Link to="/cart" className="relative cursor-pointer hover:text-blue-600 transition">
           <span className="hover:text-blue-600 transition">Cart</span>
           {cartItemsCount > 0 && (
             <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
               {cartItemsCount}
             </span>
           )}
-        </div>
+        </Link>
       </div>
     </nav>
   )
