@@ -1,16 +1,30 @@
-# React + Vite
+# High-Performance E-Commerce Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A dynamic e-commerce web application built with React, TypeScript, Zustand, and Tailwind CSS that allows users to browse products, view detailed item pages, and manage an interactive shopping cart.
 
-Currently, two official plugins are available:
+<img width="1895" height="903" alt="image" src="https://github.com/user-attachments/assets/4e9c5ca6-67c9-4b73-bfe5-8954b318160a" />
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+**Live Demo:** [View Project Live](https://mostafaosman9439.github.io/E-Commerce-Platform/#/)
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+- **Browse Products:** Grid display of products fetched dynamically with strict TypeScript interfaces.
+- **Product Details:** Dedicated routing (`/product/:id`) with dynamic image selection and details.
+- **Cart Management:** Real-time item count, quantity adjustments, and auto-calculated order totals.
+- **State & Routing:** Centralized Zustand state management and `HashRouter` for robust client-side navigation on GitHub Pages.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Tech Stack
+
+- **Framework:** React + Vite
+- **Language:** TypeScript
+- **State Management:** Zustand
+- **Routing:** React Router DOM (`HashRouter`)
+- **Styling:** Tailwind CSS
+
+---
+
+*Built with passion by Mostafa Osman.*
