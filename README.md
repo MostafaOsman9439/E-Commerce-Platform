@@ -2,7 +2,7 @@
 
 A dynamic e-commerce web application built with React, TypeScript, Zustand, and Tailwind CSS that allows users to browse products, view detailed item pages, manage an interactive shopping cart, and control store inventory through an Admin Dashboard.
 
-<img width="1895" height="903" alt="image" src="https://github.com/user-attachments/assets/4e9c5ca6-67c9-4b73-bfe5-8954b318160a" />
+<img width="1892" height="900" alt="image" src="https://github.com/user-attachments/assets/fdc05fab-3d3f-45d5-90c4-027eee833bda" />
 
 **Live Demo:** [View Project Live](https://mostafaosman9439.github.io/E-Commerce-Platform/)
 
