@@ -1,35 +1,44 @@
 import { Link } from 'react-router-dom'
-import { User } from '../types'
+import { useAuthStore } from '../store/useAuthStore'
 
-interface NavbarProps {
-  cartItemsCount: number
-  userRole?: User['role'] // Customer / Admin
-}
+export const Navbar = () => {
+  const { user, logout } = useAuthStore()
 
-export const Navbar = ({ cartItemsCount, userRole }: NavbarProps) => {
   return (
-    <nav className="bg-white shadow-md py-4 px-6 flex justify-between items-center sticky top-0 z-50">
-      <div className="text-xl font-bold text-blue-600">Mini Store</div>
-
-      <div className="flex items-center gap-6 font-medium">
-        <Link to="/" className="hover:text-blue-600 transition">
-          Home Page
+    <nav className="bg-gray-800 text-white p-4 flex justify-between items-center">
+      <div className="flex gap-4 items-center">
+        <Link to="/" className="hover:text-gray-300 font-bold">
+          Home
+        </Link>
+        <Link to="/cart" className="hover:text-gray-300">
+          Cart
         </Link>
 
-        {userRole === 'admin' && (
-          <a href="#" className="hover:text-blue-600 transition text-amber-600">
+        {user?.role === 'admin' && (
+          <Link to="/admin" className="bg-red-600 px-3 py-1 rounded hover:bg-red-700">
             Control Panel
-          </a>
+          </Link>
         )}
+      </div>
 
-        <Link to="/cart" className="relative cursor-pointer hover:text-blue-600 transition">
-          <span className="hover:text-blue-600 transition">Cart</span>
-          {cartItemsCount > 0 && (
-            <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-              {cartItemsCount}
+      <div>
+        {user ? (
+          <div className="flex gap-4 items-center">
+            <span>
+              Welcome {user.username} ({user.role})
             </span>
-          )}
-        </Link>
+            <button
+              onClick={logout}
+              className="bg-red-500 px-3 py-1 rounded text-sm hover:bg-red-600"
+            >
+              Logout
+            </button>
+          </div>
+        ) : (
+          <Link to="/login" className="bg-blue-600 px-4 py-2 rounded hover:bg-blue-700">
+            Login
+          </Link>
+        )}
       </div>
     </nav>
   )

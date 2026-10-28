@@ -15,6 +15,10 @@ interface ProductState {
   // () Means This Function Is Async Takes No Inputs Unlike The First Two And Returns Promise
   // Void Here For When It Dose Its Promise It Returns The Data In await And Store It In The ('Store's Folder')
   fetchProductsAndCategories: () => Promise<void>
+
+  addProduct: (Product: Omit<Product, 'id'>) => void // Omit Means (Utility Type) Get A Copy Of The Original Product Data Except The ID
+  deleteProduct: (id: number | string) => void
+  updateProduct: (id: number | string, updateData: Partial<Product>) => void
 }
 
 // Like useState But Instead Of Using useState For Everyone Of Them We Do This
@@ -56,6 +60,17 @@ export const useProductStore = create<ProductState>((set) => ({
       })
     }
   },
-}))
 
-useProductStore.getState().fetchProductsAndCategories()
+  addProduct: (newProduct) =>
+    set((state) => ({
+      products: [{ ...newProduct, id: Date.now() }, ...state.products],
+    })),
+  deleteProduct: (id) =>
+    set((state) => ({
+      products: state.products.filter((p) => p.id !== id),
+    })),
+  updateProduct: (id, updateData) =>
+    set((state) => ({
+      products: state.products.map((p) => (p.id === id ? { ...p, ...updateData } : p)),
+    })),
+}))
