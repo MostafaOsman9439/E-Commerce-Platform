@@ -62,7 +62,7 @@ export const ProductDetail = () => {
         </Link>
 
         <article className="mt-5 grid overflow-hidden rounded-xl border border-gray-100 bg-white shadow-md md:grid-cols-2">
-          <div className="flex min-h-80 items-center justify-center border-b border-gray-100 bg-gray-50 p-8 sm:p-12 md:min-h-[34rem] md:border-b-0 md:border-r">
+          <div className="flex min-h-80 items-center justify-center border-b border-gray-100 bg-gray-50 p-8 sm:p-12 md:min-h-136 md:border-b-0 md:border-r">
             <img
               src={product.image}
               alt={product.title}
