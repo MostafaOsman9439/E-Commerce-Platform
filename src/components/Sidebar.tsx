@@ -1,5 +1,3 @@
-import React from 'react'
-
 interface SidebarProps {
   categories: string[]
   selectedCategory: string
@@ -18,19 +16,23 @@ export const Sidebar = ({
   const allCategories = ['all', ...categories]
 
   return (
-    <aside className="w-64 bg-gray-50 p-6 rounded-lg shadow-sm h-fit">
-      <h2 className="text-lg font-bold mb-4 border-b pb-2">Filtering And Sorting</h2>
+    <aside className="h-fit w-full shrink-0 rounded-xl border border-gray-100 bg-white p-5 shadow-md lg:w-64">
+      <h2 className="mb-4 border-b border-gray-200 pb-2 text-lg font-bold text-gray-800">
+        Filter products
+      </h2>
       <div className="mb-6">
-        <h3 className="font-semibold text-sm text-gray-700 mb-2">Categories</h3>
-        <ul className="space-y-1">
+        <h3 className="mb-2 text-sm font-semibold text-gray-700">Categories</h3>
+        <ul className="max-h-64 space-y-1 overflow-y-auto">
           {allCategories.map((cat) => (
             <li key={cat}>
               <button
+                type="button"
                 onClick={() => onSelectedCategory(cat)}
-                className={`w-full text-right px-3 py-1.5 rounded transition text-sm capitalize ${
+                aria-pressed={selectedCategory === cat}
+                className={`w-full rounded-lg px-3 py-1.5 text-left text-sm capitalize transition ${
                   selectedCategory === cat
                     ? 'bg-blue-600 text-white font-medium'
-                    : 'hover:bg-gray-200 text-gray-700'
+                    : 'text-gray-700 hover:bg-gray-100'
                 }`}
               >
                 {cat}
@@ -41,15 +43,18 @@ export const Sidebar = ({
       </div>
 
       <div>
-        <h3 className="font-semibold text-sm text-gray-700 mb-2">Max Price: ${maxPrice}</h3>
+        <label htmlFor="max-price" className="mb-2 block text-sm font-semibold text-gray-700">
+          Max price: ${maxPrice}
+        </label>
         <input
+          id="max-price"
           type="range"
           min="0"
           max="1000"
           step="10"
           value={maxPrice}
           onChange={(e) => onPriceChange(Number(e.target.value))}
-          className="w-full accent-blue-600 cursor-pointer"
+          className="w-full cursor-pointer accent-blue-600"
         />
       </div>
     </aside>

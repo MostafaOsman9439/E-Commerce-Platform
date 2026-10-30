@@ -10,17 +10,27 @@ export const AdminDashboard: React.FC = () => {
   const [category, setCategory] = useState('')
   const [image, setImage] = useState('')
   const [editingId, setEditingId] = useState<number | string | null>(null)
+  const [priceError, setPriceError] = useState('')
 
   const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault()
-    if (!title || !price) return
+
+    const trimmedTitle = title.trim()
+    const nextPrice = Number(price)
+
+    if (!trimmedTitle || !price || !Number.isFinite(nextPrice) || nextPrice <= 0) {
+      setPriceError('Price must be greater than 0.')
+      return
+    }
+
+    setPriceError('')
 
     const existingProduct = editingId !== null ? products.find((product) => product.id === editingId) : null
     const productData = {
-      title,
-      price: Number(price),
-      category: category || 'General',
-      image: image || 'https://via.placeholder.com/150',
+      title: trimmedTitle,
+      price: nextPrice,
+      category: category.trim() || 'General',
+      image: image.trim() || 'https://via.placeholder.com/150',
       description: existingProduct?.description ?? 'No description available',
       stock: existingProduct?.stock ?? 0,
     }
@@ -44,6 +54,16 @@ export const AdminDashboard: React.FC = () => {
     setPrice(product.price.toString())
     setCategory(product.category)
     setImage(product.image)
+    setPriceError('')
+  }
+
+  const resetForm = () => {
+    setEditingId(null)
+    setTitle('')
+    setPrice('')
+    setCategory('')
+    setImage('')
+    setPriceError('')
   }
 
   return (
@@ -75,8 +95,13 @@ export const AdminDashboard: React.FC = () => {
             <label className="block text-sm font-medium text-gray-600 mb-1">Price ($)</label>
             <input
               type="number"
+              min="0.01"
+              step="0.01"
               value={price}
-              onChange={(e) => setPrice(e.target.value)}
+              onChange={(e) => {
+                setPrice(e.target.value)
+                setPriceError('')
+              }}
               className="w-full border border-gray-300 rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none"
               placeholder="0.00"
               required
@@ -106,6 +131,12 @@ export const AdminDashboard: React.FC = () => {
           </div>
         </div>
 
+        {priceError && (
+          <p className="mt-3 text-sm text-red-600" role="alert">
+            {priceError}
+          </p>
+        )}
+
         <div className="mt-6 flex gap-3">
           <button
             type="submit"
@@ -121,13 +152,7 @@ export const AdminDashboard: React.FC = () => {
           {editingId !== null && (
             <button
               type="button"
-              onClick={() => {
-                setEditingId(null)
-                setTitle('')
-                setPrice('')
-                setCategory('')
-                setImage('')
-              }}
+              onClick={resetForm}
               className="bg-gray-200 text-gray-700 px-4 py-2.5 rounded-lg font-medium hover:bg-gray-300 transition"
             >
               Cancel

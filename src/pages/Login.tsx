@@ -15,9 +15,9 @@ export const Login = () => {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-[80vh]">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">Demo access</h2>
+    <div className="flex min-h-[80vh] items-center justify-center bg-gray-50 px-4 py-8">
+      <div className="w-full max-w-md rounded-xl border border-gray-100 bg-white p-6 shadow-md sm:p-8">
+        <h2 className="mb-6 text-center text-2xl font-bold text-gray-800">Demo access</h2>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
