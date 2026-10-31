@@ -15,6 +15,7 @@ A responsive e-commerce web app built with React, TypeScript, Zustand and Tailwi
 - Product detail pages (`/product/:id`)
 - Cart with quantity changes and automatic totals
 - Admin dashboard with add, edit and delete for products
+- Login: Click Login at the top right, enter any username and choose Customer or Admin. Admins get the dashboard to add, edit and delete products.
 - Global state with Zustand, saved in the browser with localStorage
 
 ---
@@ -27,9 +28,21 @@ React, Vite, TypeScript, Zustand, React Router, Tailwind CSS
 ---
 
 ## Limitations
+
+The login is a front-end demo only: any username works and the role is picked on the page, so it is not real security.
+
 There is no backend. The Fake Store API does not save changes, so admin edits are stored in the browser (localStorage) and stay on this device only.
 
 ---
+
+## Run Locally
+
+```bash
+git clone https://github.com/MostafaOsman9439/E-Commerce-Platform.git
+cd E-Commerce-Platform
+npm install
+npm run dev
+```
 
 ## What I learned and next steps
 - Managing global state with Zustand and typing API data with TypeScript
