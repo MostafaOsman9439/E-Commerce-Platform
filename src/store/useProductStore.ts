@@ -22,7 +22,7 @@ interface ProductState {
 }
 
 // Like useState But Instead Of Using useState For Everyone Of Them We Do This
-export const useProductStore = create<ProductState>((set) => ({
+export const useProductStore = create<ProductState>((set, get) => ({
   products: [],
   categories: [],
   selectedCategory: 'all',
@@ -34,6 +34,10 @@ export const useProductStore = create<ProductState>((set) => ({
   setMaxPrice: (price) => set({ maxPrice: price }),
 
   fetchProductsAndCategories: async () => {
+    if (get().isLoading) {
+      return
+    }
+
     set({ isLoading: true, error: null })
     try {
       const [productsRes, categoriesRes] = await Promise.all([

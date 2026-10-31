@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { Navbar } from './components/Navbar'
 import { ProtectedRoute } from './components/ProtectedRoute'
@@ -7,7 +8,6 @@ import { Home } from './pages/Home'
 import { ProductDetail } from './pages/ProductDetail'
 import { Cart } from './pages/Cart'
 import { Login } from './pages/Login'
-import { useEffect } from 'react'
 
 export function App() {
   const fetchProductsAndCategories = useProductStore((state) => state.fetchProductsAndCategories)
