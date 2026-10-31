@@ -1,34 +1,39 @@
-# High-Performance E-Commerce Platform
+# E-Commerce Platform
 
-A dynamic e-commerce web application built with React, TypeScript, Zustand, and Tailwind CSS that allows users to browse products, view detailed item pages, manage an interactive shopping cart, and control store inventory through an Admin Dashboard.
+A responsive e-commerce web app built with React, TypeScript, Zustand and Tailwind CSS. Users can browse products, view product details and manage a cart. An admin dashboard lets you add, edit and delete products.
 
-<img width="1892" height="900" alt="image" src="https://github.com/user-attachments/assets/fdc05fab-3d3f-45d5-90c4-027eee833bda" />
+<img width="1897" height="905" alt="image" src="https://github.com/user-attachments/assets/62ce574c-ab15-4ef7-8e2c-c472ea06d3d7" />
 
 **Live Demo:** [View Project Live](https://mostafaosman9439.github.io/E-Commerce-Platform/)
 
-<img width="1912" height="896" alt="image" src="https://github.com/user-attachments/assets/fb6cc1e1-31ef-44dd-929a-8d2a37f2702f" />
+<img width="1917" height="905" alt="image" src="https://github.com/user-attachments/assets/5a447551-6e6a-4f79-bdc2-75f649ae7493" />
 
 ---
 
 ## Features
-
-- **Browse Products:** Grid display of products fetched dynamically from Fake Store API with strict TypeScript interfaces.
-- **Product Details:** Dedicated routing (`/product/:id`) with dynamic image selection and details.
-- **Cart Management:** Real-time item count, quantity adjustments, and auto-calculated order totals.
-- **Admin Dashboard:** Full CRUD operations allowing administrators to add, edit, and delete products seamlessly.
-- **State & Routing:** Centralized Zustand state management and React Router (`BrowserRouter`) for smooth client-side navigation.
+- Product grid loaded from the Fake Store API, with TypeScript interfaces for the data
+- Product detail pages (`/product/:id`)
+- Cart with quantity changes and automatic totals
+- Admin dashboard with add, edit and delete for products
+- Global state with Zustand, saved in the browser with localStorage
 
 ---
 
-<img width="1896" height="903" alt="image" src="https://github.com/user-attachments/assets/2926bdb5-d083-4748-9437-b5f2e76eb5d6" />
+<img width="1897" height="897" alt="image" src="https://github.com/user-attachments/assets/1dd3c9bf-0401-47ef-82c8-6a7b29ef8250" />
 
-## Tech Stack
+## Tech stack
+React, Vite, TypeScript, Zustand, React Router, Tailwind CSS
 
-- **Framework:** React + Vite
-- **Language:** TypeScript
-- **State Management:** Zustand
-- **Routing:** React Router DOM (`BrowserRouter`)
-- **Styling:** Tailwind CSS
+---
+
+## Limitations
+There is no backend. The Fake Store API does not save changes, so admin edits are stored in the browser (localStorage) and stay on this device only.
+
+---
+
+## What I learned and next steps
+- Managing global state with Zustand and typing API data with TypeScript
+- Next: add tests (Vitest and React Testing Library), user authentication, and a real backend
 
 ---
 
