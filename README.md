@@ -37,4 +37,4 @@ There is no backend. The Fake Store API does not save changes, so admin edits ar
 
 ---
 
-*Built with passion by Mostafa Osman.*
+*Built with passion by Mostafa Osman ([GitHub](https://github.com/MostafaOsman9439) · [LinkedIn](https://www.linkedin.com/in/mostafa-osman-6ba36a43a/))*
