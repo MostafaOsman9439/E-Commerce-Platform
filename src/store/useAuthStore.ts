@@ -5,14 +5,14 @@ interface AuthState {
   user: {
     username: string
     role: 'customer' | 'admin'
-  } | null // Null Means "Nobody Is Logged In"
+  } | null // Null Means Nobody Is Logged In
   login: (username: string, role: 'customer' | 'admin') => void
   logout: () => void
 }
 
 // Same Pattern As The Cart Store
 // Persist Saves The State To LocalStorage
-// And Restores It When The Page Loads, Why Did We Do This ? So A Refresh No Longer Logs You Out.
+// And Restores It When The Page Loads, Why Did We Do This ? So A Refresh No Longer Logs You Out
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({

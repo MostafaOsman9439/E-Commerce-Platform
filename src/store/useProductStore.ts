@@ -45,9 +45,16 @@ export const useProductStore = create<ProductState>()(
         set({ isLoading: true, error: null })
         productsFetchInProgress = (async () => {
           try {
-            // If products were restored from localStorage, keep them (they contain the admin's changes).
+            // If Products Were Restored From LocalStorage Keep Them why ? They Contain The Admin's Changes
             const needsProducts = get().products.length === 0
 
+            // I Deduplicated concurrent Requests By Sharing The In-Flight Promise
+            // If The Code Threw An Error Before The First Await
+            // Finally Would Run Before The Assignment
+            // And The Variable Would End Up Holding A Finished Promise Forever
+            // Blocking Later Fetches
+            // We Need To Avoid That Because Fetch Returns A Promise And Doesn’t Throw Directly
+            // Ai Fixed This For Me !!
             const [productsRes, categoriesRes] = await Promise.all([
               needsProducts ? fetch(PRODUCTS_URL) : Promise.resolve(null),
               fetch(CATEGORIES_URL),
@@ -78,7 +85,6 @@ export const useProductStore = create<ProductState>()(
         return productsFetchInProgress
       },
 
-      // Clears the saved products and loads the original ones from the API again.
       resetProducts: async () => {
         if (productsFetchInProgress) {
           await productsFetchInProgress
@@ -103,7 +109,7 @@ export const useProductStore = create<ProductState>()(
     }),
     {
       name: 'products-storage',
-      // Save only the products. Loading flags, errors and filters should not be stored.
+      // Save The Products Only Loading/Errors/Filters Should Not Be Stored
       partialize: (state) => ({ products: state.products }),
     }
   )

@@ -1,4 +1,4 @@
-// The Shape Of One Product (Matches What Fake Store API Returns).
+// The Shape Of One Product Matches What Fake Store API Returns
 export interface Product {
   id: number
   title: string
@@ -9,7 +9,7 @@ export interface Product {
   image: string
 }
 
-// Defined Once Here So The Store And The Pages Always Agree On Its Shape.
+// Defined Once Here So The Store And The Pages Always Agree On Its Shape
 export interface CartItem {
   product: Product
   quantity: number
