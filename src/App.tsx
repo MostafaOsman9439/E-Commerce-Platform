@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { Navbar } from './components/Navbar'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { AdminDashboard } from './pages/AdminDashboard'
@@ -17,7 +17,14 @@ export function App() {
   }, [fetchProductsAndCategories])
 
   return (
-    <Router basename={import.meta.env.BASE_URL}>
+    //  With BrowserRouter, The Url Is .../E-Commerce-Platform/cart
+    //  On Refresh, The Browser Asks GitHub Pages For A Real Page At That Path
+    //  And It Doesn’t Exist, So We Get A 404 Error
+    //  Our Local Dev Server Avoids The Problem By Sending Index.html For Every Path
+    //  Thats Why I Changed It With HashRouter, the URL is .../E-Commerce-Platform/#/cart
+    //  Everything After # Never Goes To The Server
+    //  So The Browser Always Loads Index.html And React Reads The Route From The Hash
+    <Router>
       <div className="min-h-screen bg-gray-50 flex flex-col">
         <Navbar />
 

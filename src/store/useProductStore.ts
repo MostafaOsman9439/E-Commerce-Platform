@@ -1,5 +1,10 @@
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 import { Product } from '../types'
+
+const PRODUCTS_URL = 'https://fakestoreapi.com/products'
+const CATEGORIES_URL = 'https://fakestoreapi.com/products/categories'
+let productsFetchInProgress: Promise<void> | null = null
 
 interface ProductState {
   products: Product[]
@@ -9,72 +14,97 @@ interface ProductState {
   isLoading: boolean
   error: string | null
 
-  // These Functions Only Has One Purpose To Update The States, And Void For Returning Nothing
   setSelectedCategory: (category: string) => void
   setMaxPrice: (price: number) => void
-  // () Means This Function Is Async Takes No Inputs Unlike The First Two And Returns Promise
-  // Void Here For When It Dose Its Promise It Returns The Data In await And Store It In The ('Store's Folder')
   fetchProductsAndCategories: () => Promise<void>
+  resetProducts: () => Promise<void>
 
-  addProduct: (Product: Omit<Product, 'id'>) => void // Omit Means (Utility Type) Get A Copy Of The Original Product Data Except The ID
+  addProduct: (product: Omit<Product, 'id'>) => void
   deleteProduct: (id: number | string) => void
   updateProduct: (id: number | string, updateData: Partial<Product>) => void
 }
 
-// Like useState But Instead Of Using useState For Everyone Of Them We Do This
-export const useProductStore = create<ProductState>((set, get) => ({
-  products: [],
-  categories: [],
-  selectedCategory: 'all',
-  maxPrice: 1000,
-  isLoading: false,
-  error: null,
+export const useProductStore = create<ProductState>()(
+  persist(
+    (set, get) => ({
+      products: [],
+      categories: [],
+      selectedCategory: 'all',
+      maxPrice: 1000,
+      isLoading: false,
+      error: null,
 
-  setSelectedCategory: (category) => set({ selectedCategory: category }),
-  setMaxPrice: (price) => set({ maxPrice: price }),
+      setSelectedCategory: (category) => set({ selectedCategory: category }),
+      setMaxPrice: (price) => set({ maxPrice: price }),
 
-  fetchProductsAndCategories: async () => {
-    if (get().isLoading) {
-      return
+      fetchProductsAndCategories: () => {
+        if (productsFetchInProgress) {
+          return productsFetchInProgress
+        }
+
+        set({ isLoading: true, error: null })
+        productsFetchInProgress = (async () => {
+          try {
+            // If products were restored from localStorage, keep them (they contain the admin's changes).
+            const needsProducts = get().products.length === 0
+
+            const [productsRes, categoriesRes] = await Promise.all([
+              needsProducts ? fetch(PRODUCTS_URL) : Promise.resolve(null),
+              fetch(CATEGORIES_URL),
+            ])
+
+            if ((productsRes && !productsRes.ok) || !categoriesRes.ok) {
+              throw new Error('An error occurred while fetching data from the server.')
+            }
+
+            const categoriesData: string[] = await categoriesRes.json()
+
+            if (productsRes) {
+              const productsData: Product[] = await productsRes.json()
+              set({ products: productsData, categories: categoriesData, isLoading: false })
+            } else {
+              set({ categories: categoriesData, isLoading: false })
+            }
+          } catch (err) {
+            set({
+              error: err instanceof Error ? err.message : 'An unexpected error occurred',
+              isLoading: false,
+            })
+          } finally {
+            productsFetchInProgress = null
+          }
+        })()
+
+        return productsFetchInProgress
+      },
+
+      // Clears the saved products and loads the original ones from the API again.
+      resetProducts: async () => {
+        if (productsFetchInProgress) {
+          await productsFetchInProgress
+        }
+
+        set({ products: [] })
+        await get().fetchProductsAndCategories()
+      },
+
+      addProduct: (newProduct) =>
+        set((state) => ({
+          products: [{ ...newProduct, id: Date.now() }, ...state.products],
+        })),
+      deleteProduct: (id) =>
+        set((state) => ({
+          products: state.products.filter((p) => p.id !== id),
+        })),
+      updateProduct: (id, updateData) =>
+        set((state) => ({
+          products: state.products.map((p) => (p.id === id ? { ...p, ...updateData } : p)),
+        })),
+    }),
+    {
+      name: 'products-storage',
+      // Save only the products. Loading flags, errors and filters should not be stored.
+      partialize: (state) => ({ products: state.products }),
     }
-
-    set({ isLoading: true, error: null })
-    try {
-      const [productsRes, categoriesRes] = await Promise.all([
-        fetch('https://fakestoreapi.com/products'),
-        fetch('https://fakestoreapi.com/products/categories'),
-      ])
-
-      if (!productsRes.ok || !categoriesRes.ok) {
-        throw new Error('An error occurred while fetching data from the server.')
-      }
-
-      const productsData: Product[] = await productsRes.json()
-      const categoriesData: string[] = await categoriesRes.json()
-
-      set({
-        products: productsData,
-        categories: categoriesData,
-        isLoading: false,
-      })
-    } catch (err) {
-      set({
-        error: err instanceof Error ? err.message : 'An unexpected error occurred',
-        isLoading: false,
-      })
-    }
-  },
-
-  addProduct: (newProduct) =>
-    set((state) => ({
-      products: [{ ...newProduct, id: Date.now() }, ...state.products],
-    })),
-  deleteProduct: (id) =>
-    set((state) => ({
-      products: state.products.filter((p) => p.id !== id),
-    })),
-  updateProduct: (id, updateData) =>
-    set((state) => ({
-      products: state.products.map((p) => (p.id === id ? { ...p, ...updateData } : p)),
-    })),
-}))
+  )
+)

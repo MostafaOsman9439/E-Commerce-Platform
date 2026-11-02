@@ -3,7 +3,7 @@ import { useProductStore } from '../store/useProductStore'
 import { Product } from '../types'
 
 export const AdminDashboard: React.FC = () => {
-  const { products, addProduct, deleteProduct, updateProduct } = useProductStore()
+  const { products, addProduct, deleteProduct, updateProduct, resetProducts } = useProductStore()
 
   const [title, setTitle] = useState('')
   const [price, setPrice] = useState('')
@@ -25,7 +25,8 @@ export const AdminDashboard: React.FC = () => {
 
     setPriceError('')
 
-    const existingProduct = editingId !== null ? products.find((product) => product.id === editingId) : null
+    const existingProduct =
+      editingId !== null ? products.find((product) => product.id === editingId) : null
     const productData = {
       title: trimmedTitle,
       price: nextPrice,
@@ -68,7 +69,16 @@ export const AdminDashboard: React.FC = () => {
 
   return (
     <div className="max-w-6xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-8 text-gray-800 border-b pb-4">Admin Dashboard</h1>
+      <div className="mb-8 flex items-center justify-between border-b pb-4">
+        <h1 className="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
+        <button
+          type="button"
+          onClick={() => resetProducts()}
+          className="rounded-lg bg-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-300"
+        >
+          Reset products
+        </button>
+      </div>
 
       <form
         onSubmit={handleSubmit}

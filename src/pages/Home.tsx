@@ -3,6 +3,7 @@ import { Sidebar } from '../components/Sidebar'
 import { ProductCard } from '../components/ProductCard'
 import { useProductStore } from '../store/useProductStore'
 import { useCartStore } from '../store/useCartStore'
+import { selectCartCount } from '../store/useCartStore'
 
 export const Home = () => {
   const {
@@ -16,9 +17,8 @@ export const Home = () => {
     setMaxPrice,
   } = useProductStore()
 
-  const cartItems = useCartStore((state) => state.items)
+  const totalItems = useCartStore(selectCartCount)
   const addToCart = useCartStore((state) => state.addToCart)
-  const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0)
 
   const filteredProducts = products.filter((product) => {
     const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory
@@ -61,7 +61,10 @@ export const Home = () => {
           )}
 
           {error && (
-            <div role="alert" className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">
+            <div
+              role="alert"
+              className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-red-700"
+            >
               {error}
             </div>
           )}
