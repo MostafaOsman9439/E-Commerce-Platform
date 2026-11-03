@@ -17,13 +17,9 @@ export function App() {
   }, [fetchProductsAndCategories])
 
   return (
-    //  With BrowserRouter, The Url Is .../E-Commerce-Platform/cart
-    //  On Refresh, The Browser Asks GitHub Pages For A Real Page At That Path
-    //  And It Doesn’t Exist, So We Get A 404 Error
-    //  Our Local Dev Server Avoids The Problem By Sending Index.html For Every Path
-    //  Thats Why I Changed It With HashRouter, the URL is .../E-Commerce-Platform/#/cart
-    //  Everything After # Never Goes To The Server
-    //  So The Browser Always Loads Index.html And React Reads The Route From The Hash
+    // HashRouter keeps the route after the "#" (example: /#/cart), so the server only sees
+    // the base URL. BrowserRouter would ask GitHub Pages for /cart on refresh, and that
+    // page doesn't exist there, which caused the 404.
     <Router>
       <div className="min-h-screen bg-gray-50 flex flex-col">
         <Navbar />
