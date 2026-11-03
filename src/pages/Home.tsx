@@ -37,7 +37,7 @@ export const Home = () => {
           onPriceChange={setMaxPrice}
         />
 
-        <main className="min-w-0 flex-1">
+        <div className="min-w-0 flex-1">
           <div className="mb-6 flex flex-col gap-3 rounded-xl border border-gray-100 bg-white p-5 shadow-md sm:flex-row sm:items-center sm:justify-between">
             <h1 className="text-2xl font-bold text-gray-800">
               Available products <span className="text-blue-600">({filteredProducts.length})</span>
@@ -82,7 +82,7 @@ export const Home = () => {
               ))}
             </div>
           )}
-        </main>
+        </div>
       </div>
     </div>
   )

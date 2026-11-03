@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import { useProductStore } from '../store/useProductStore'
 import { Product } from '../types'
 
+// BASE_URL Is The Folder The Site Is Served From So The Image Works On GitHub Pages Too
+const PLACEHOLDER_IMAGE = `${import.meta.env.BASE_URL}placeholder.svg`
+
 export const AdminDashboard: React.FC = () => {
   const { products, addProduct, deleteProduct, updateProduct, resetProducts } = useProductStore()
 
@@ -31,7 +34,7 @@ export const AdminDashboard: React.FC = () => {
       title: trimmedTitle,
       price: nextPrice,
       category: category.trim() || 'General',
-      image: image.trim() || 'https://via.placeholder.com/150',
+      image: image.trim() || PLACEHOLDER_IMAGE,
       description: existingProduct?.description ?? 'No description available',
       stock: existingProduct?.stock ?? 0,
     }
@@ -90,8 +93,11 @@ export const AdminDashboard: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1">Product Name</label>
+            <label htmlFor="product-name" className="block text-sm font-medium text-gray-600 mb-1">
+              Product Name
+            </label>
             <input
+              id="product-name"
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
@@ -102,8 +108,11 @@ export const AdminDashboard: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1">Price ($)</label>
+            <label htmlFor="product-price" className="block text-sm font-medium text-gray-600 mb-1">
+              Price ($)
+            </label>
             <input
+              id="product-price"
               type="number"
               min="0.01"
               step="0.01"
@@ -119,8 +128,14 @@ export const AdminDashboard: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1">Category</label>
+            <label
+              htmlFor="product-category"
+              className="block text-sm font-medium text-gray-600 mb-1"
+            >
+              Category
+            </label>
             <input
+              id="product-category"
               type="text"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
@@ -130,8 +145,11 @@ export const AdminDashboard: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1">Image URL</label>
+            <label htmlFor="product-image" className="block text-sm font-medium text-gray-600 mb-1">
+              Image URL
+            </label>
             <input
+              id="product-image"
               type="text"
               value={image}
               onChange={(e) => setImage(e.target.value)}
@@ -197,7 +215,7 @@ export const AdminDashboard: React.FC = () => {
                 <tr key={product.id} className="border-b hover:bg-gray-50/80 transition">
                   <td className="p-4 flex items-center gap-3">
                     <img
-                      src={product.image || 'https://via.placeholder.com/150'}
+                      src={product.image || PLACEHOLDER_IMAGE}
                       alt={product.title}
                       className="w-12 h-12 object-cover rounded-md border"
                     />
