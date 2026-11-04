@@ -37,11 +37,13 @@ export const useProductStore = create<ProductState>()(
       setSelectedCategory: (category) => set({ selectedCategory: category }),
       setMaxPrice: (price) => set({ maxPrice: price }),
 
+      // If A Fetch Is Already Running Return That Same One So There Are No Duplicate Requests
       fetchProductsAndCategories: () => {
         if (productsFetchInProgress) {
           return productsFetchInProgress
         }
 
+        // Mark isLoading As True.
         set({ isLoading: true, error: null })
         productsFetchInProgress = (async () => {
           try {
@@ -55,15 +57,21 @@ export const useProductStore = create<ProductState>()(
             // Blocking Later Fetches
             // We Need To Avoid That Because Fetch Returns A Promise And Doesn’t Throw Directly
             // Ai Fixed This For Me !!
+
+            // Check If Saved Products Exist From LocalStorage.
+            // Fetch Categories Always And Products Only
+            // If None Are Saved Both At The Same Time With Promise.all
             const [productsRes, categoriesRes] = await Promise.all([
               needsProducts ? fetch(PRODUCTS_URL) : Promise.resolve(null),
               fetch(CATEGORIES_URL),
             ])
 
+            // If Any Response Isn’t ok, Throw An Error.
             if ((productsRes && !productsRes.ok) || !categoriesRes.ok) {
               throw new Error('An error occurred while fetching data from the server.')
             }
 
+            // Save The Data Into State
             const categoriesData: string[] = await categoriesRes.json()
 
             if (productsRes) {
@@ -72,11 +80,15 @@ export const useProductStore = create<ProductState>()(
             } else {
               set({ categories: categoriesData, isLoading: false })
             }
+
+            // And On Error Save The Message
           } catch (err) {
             set({
               error: err instanceof Error ? err.message : 'An unexpected error occurred',
               isLoading: false,
             })
+
+            // finally Clears The Running Marker Whether It Worked Or Not.
           } finally {
             productsFetchInProgress = null
           }
