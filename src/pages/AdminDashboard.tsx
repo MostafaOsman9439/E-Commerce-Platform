@@ -12,10 +12,12 @@ export const AdminDashboard: React.FC = () => {
   const [price, setPrice] = useState('')
   const [category, setCategory] = useState('')
   const [image, setImage] = useState('')
-  const [editingId, setEditingId] = useState<number | string | null>(null)
+  const [editingId, setEditingId] = useState<number | null>(null)
   const [priceError, setPriceError] = useState('')
+  const [isSaving, setIsSaving] = useState(false)
+  const [actionError, setActionError] = useState('')
 
-  const handleSubmit = (e: React.SubmitEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault()
 
     const trimmedTitle = title.trim()
@@ -27,6 +29,8 @@ export const AdminDashboard: React.FC = () => {
     }
 
     setPriceError('')
+    setActionError('')
+    setIsSaving(true)
 
     const existingProduct =
       editingId !== null ? products.find((product) => product.id === editingId) : null
@@ -39,17 +43,31 @@ export const AdminDashboard: React.FC = () => {
       stock: existingProduct?.stock ?? 0,
     }
 
-    if (editingId !== null) {
-      updateProduct(editingId, productData)
-      setEditingId(null)
-    } else {
-      addProduct(productData)
+    // Wait for the database to answer before changing the form.
+    const errorMessage =
+      editingId !== null
+        ? await updateProduct(editingId, productData)
+        : await addProduct(productData)
+
+    setIsSaving(false)
+
+    if (errorMessage) {
+      setActionError(errorMessage)
+      return
     }
 
-    setTitle('')
-    setPrice('')
-    setCategory('')
-    setImage('')
+    resetForm()
+  }
+
+  const handleDelete = async (id: number) => {
+    if (!window.confirm('Delete this product?')) {
+      return
+    }
+    setActionError('')
+    const errorMessage = await deleteProduct(id)
+    if (errorMessage) {
+      setActionError(errorMessage)
+    }
   }
 
   const handleEditClick = (product: Product) => {
@@ -162,6 +180,12 @@ export const AdminDashboard: React.FC = () => {
         {priceError && (
           <p className="mt-3 text-sm text-red-600" role="alert">
             {priceError}
+          </p>
+        )}
+
+        {actionError && (
+          <p className="mt-3 text-sm text-red-600" role="alert">
+            {actionError}
           </p>
         )}
 
