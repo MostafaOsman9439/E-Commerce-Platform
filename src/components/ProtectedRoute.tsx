@@ -9,6 +9,16 @@ interface ProtectedRouteProps {
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requiredRole }) => {
   const user = useAuthStore((state) => state.user)
+  const isLoading = useAuthStore((state) => state.isLoading)
+
+  // Wait until we know if someone is logged in, otherwise a refresh would redirect admins away.
+  if (isLoading) {
+    return (
+      <p className="p-8 text-center text-gray-600" role="status">
+        Checking your session...
+      </p>
+    )
+  }
 
   if (!user) {
     return <Navigate to="/login" replace />
