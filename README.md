@@ -37,6 +37,7 @@ React 19, TypeScript, Vite, Zustand, React Router (HashRouter), Tailwind CSS, Su
 - There is no checkout, payment or order system. The cart is saved only in the browser (localStorage), so it is not linked to an account and does not sync between devices.
 - This is a frontend project. The backend is Supabase, a hosted service, and I did not write my own server.
 - New users are always customers. The app has no way to make someone an admin, so an admin role has to be set directly in the Supabase database.
+- Email confirmation is turned off for the demo, so sign-up does not verify email addresses and allows unverified or fake emails.
 - The app uses HashRouter, so URLs contain `#` (for example `/#/cart`). This lets page refreshes work on GitHub Pages.
 - Tests cover only the cart store, `ProductCard` and `ProtectedRoute`. The Supabase calls and the admin dashboard have no tests, and there is no CI.
 
@@ -88,6 +89,8 @@ npm run dev
 ```
 
 The store starts empty. To add products, make an admin (sign up in the app, then change that user's `role` to `admin` in the `profiles` table) and use the admin dashboard.
+
+Run the tests with `npm test`.
 
 ---
 
