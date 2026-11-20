@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useProductStore } from '../store/useProductStore'
 import { Product } from '../types'
 
@@ -7,7 +7,7 @@ const PLACEHOLDER_IMAGE = `${import.meta.env.BASE_URL}placeholder.svg`
 
 export const AdminDashboard: React.FC = () => {
   const { products, addProduct, deleteProduct, updateProduct, resetProducts } = useProductStore()
-
+  const formRef = useRef<HTMLFormElement | null>(null)
   const [title, setTitle] = useState('')
   const [price, setPrice] = useState('')
   const [category, setCategory] = useState('')
@@ -77,6 +77,8 @@ export const AdminDashboard: React.FC = () => {
     setCategory(product.category)
     setImage(product.image)
     setPriceError('')
+    // Scroll after state updates so the form is ready for editing.
+    formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
   const resetForm = () => {
@@ -102,6 +104,7 @@ export const AdminDashboard: React.FC = () => {
       </div>
 
       <form
+        ref={formRef}
         onSubmit={handleSubmit}
         className="bg-white p-6 rounded-xl shadow-md mb-10 border border-gray-100"
       >
@@ -259,7 +262,8 @@ export const AdminDashboard: React.FC = () => {
                       Edit
                     </button>
                     <button
-                      onClick={() => deleteProduct(product.id)}
+                      type="button"
+                      onClick={() => handleDelete(product.id)}
                       className="bg-red-50 text-red-700 px-3.5 py-1.5 rounded-lg text-sm font-medium hover:bg-red-100 transition"
                     >
                       Delete
