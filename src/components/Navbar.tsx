@@ -4,7 +4,8 @@ import { useCartStore } from '../store/useCartStore'
 import { selectCartCount } from '../store/useCartStore'
 
 export const Navbar = () => {
-  const { user, logout } = useAuthStore()
+  const user = useAuthStore((state) => state.user)
+  const signOut = useAuthStore((state) => state.signOut)
   const cartCount = useCartStore(selectCartCount)
 
   return (
@@ -44,10 +45,10 @@ export const Navbar = () => {
           {user ? (
             <div className="flex items-center gap-4">
               <span className="hidden text-sm text-slate-200 sm:inline">
-                Welcome {user.username} ({user.role})
+                Welcome {user.email} ({user.role}).
               </span>
               <button
-                onClick={logout}
+                onClick={signOut}
                 className="rounded-lg bg-red-600 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-red-700"
               >
                 Logout
