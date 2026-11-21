@@ -19,7 +19,7 @@ A responsive e-commerce web app built with React, TypeScript, Zustand and Tailwi
 - Sign up, log in and log out with Supabase Auth (email and password)
 - Two roles, customer and admin, stored in a `profiles` table
 - Admin dashboard: add, edit and delete products in the database. Only admins can do this, and the rule is enforced by Row Level Security (RLS) policies in Postgres, not just by hiding buttons
-- "Reset products" reloads the product list from the database
+- "Reload products" reloads the product list from the database
 - Global state with Zustand
 
 ---
