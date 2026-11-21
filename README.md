@@ -2,11 +2,11 @@
 
 A responsive e-commerce web app built with React, TypeScript, Zustand and Tailwind CSS. It is a frontend project that uses Supabase as a hosted backend (database and authentication). Users can browse products, sign up and log in, and manage a cart. Admins can add, edit and delete products from a dashboard.
 
-<img width="1897" height="905" alt="image" src="https://github.com/user-attachments/assets/62ce574c-ab15-4ef7-8e2c-c472ea06d3d7" />
+<img width="1917" height="900" alt="image" src="https://github.com/user-attachments/assets/4664b89a-a61b-41ff-94d6-bc2013621720" />
 
 **Live Demo:** [View Project Live](https://mostafaosman9439.github.io/E-Commerce-Platform/)
 
-<img width="1917" height="905" alt="image" src="https://github.com/user-attachments/assets/5a447551-6e6a-4f79-bdc2-75f649ae7493" />
+<img width="1917" height="900" alt="image" src="https://github.com/user-attachments/assets/39ab707b-cde5-4434-b008-40b3047280ef" />
 
 ---
 
@@ -24,7 +24,9 @@ A responsive e-commerce web app built with React, TypeScript, Zustand and Tailwi
 
 ---
 
-<img width="1897" height="897" alt="image" src="https://github.com/user-attachments/assets/1dd3c9bf-0401-47ef-82c8-6a7b29ef8250" />
+<img width="1917" height="907" alt="image" src="https://github.com/user-attachments/assets/fb06cb29-c57b-41d6-acbc-460219de56ca" />
+
+<img width="1917" height="907" alt="image" src="https://github.com/user-attachments/assets/b152e00a-a4dc-4282-8cc5-e37ff6a10856" />
 
 ## Tech stack
 
