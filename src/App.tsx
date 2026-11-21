@@ -13,7 +13,7 @@ import { useAuthStore } from './store/useAuthStore'
 export function App() {
   const initializeAuth = useAuthStore((state) => state.initialize)
   useEffect(() => initializeAuth(), [initializeAuth])
-  
+
   const fetchProductsAndCategories = useProductStore((state) => state.fetchProductsAndCategories)
 
   useEffect(() => {

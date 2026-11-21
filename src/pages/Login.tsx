@@ -27,9 +27,7 @@ export const Login = () => {
     setMessage(null)
 
     const result =
-      mode === 'login'
-        ? await signIn(email.trim(), password)
-        : await signUp(email.trim(), password)
+      mode === 'login' ? await signIn(email.trim(), password) : await signUp(email.trim(), password)
 
     setIsSubmitting(false)
     setMessage({ text: result.message, isError: !result.ok })

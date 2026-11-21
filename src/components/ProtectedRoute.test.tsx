@@ -28,7 +28,7 @@ describe('ProtectedRoute', () => {
   beforeEach(() => {
     useAuthStore.setState({ user: null, isLoading: false })
   })
-  
+
   it('redirects to home when the role does not match', () => {
     useAuthStore.setState({ user: { id: '1', email: 'a@b.com', role: 'customer' } })
     renderRoute('admin')

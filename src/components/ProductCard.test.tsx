@@ -5,6 +5,10 @@ import { MemoryRouter } from 'react-router-dom'
 import { ProductCard } from './ProductCard'
 import { Product } from '../types'
 
+// The auth store imports the Supabase client, which needs real keys.
+// Tests should not need keys or a network, so we replace it with an empty fake.
+vi.mock('../lib/supabase', () => ({ supabase: {} }))
+
 const shirt: Product = {
   id: 1,
   title: 'Shirt',
