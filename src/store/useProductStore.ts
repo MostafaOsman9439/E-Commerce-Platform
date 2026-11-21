@@ -90,7 +90,9 @@ export const useProductStore = create<ProductState>()((set, get) => ({
       .single()
     if (error) {
       // PGRST116 means no row came back: the policy blocked it, or the product is gone.
-      return error.code === 'PGRST116' ? 'Not allowed, or the product no longer exists.' : error.message
+      return error.code === 'PGRST116'
+        ? 'Not allowed, or the product no longer exists.'
+        : error.message
     }
 
     const products = get().products.map((p) => (p.id === id ? (data as Product) : p))

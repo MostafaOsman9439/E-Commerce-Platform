@@ -5,9 +5,7 @@ import { useProductStore } from '../store/useProductStore'
 export const ProductDetail = () => {
   const { id } = useParams<{ id: string }>()
   const productId = Number(id)
-  const product = useProductStore((state) =>
-    state.products.find((item) => item.id === productId)
-  )
+  const product = useProductStore((state) => state.products.find((item) => item.id === productId))
   const isLoading = useProductStore((state) => state.isLoading)
   const error = useProductStore((state) => state.error)
   const addToCart = useCartStore((state) => state.addToCart)
@@ -23,7 +21,10 @@ export const ProductDetail = () => {
   if (error) {
     return (
       <section className="min-h-full bg-gray-50 px-4 py-12">
-        <p role="alert" className="mx-auto max-w-6xl rounded-lg border border-red-200 bg-red-50 p-5 text-red-700">
+        <p
+          role="alert"
+          className="mx-auto max-w-6xl rounded-lg border border-red-200 bg-red-50 p-5 text-red-700"
+        >
           {error}
         </p>
       </section>
@@ -38,7 +39,9 @@ export const ProductDetail = () => {
             Product unavailable
           </p>
           <h1 className="mt-3 text-2xl font-bold text-gray-800">We could not find that product</h1>
-          <p className="mt-2 text-gray-600">It may have been removed or the link may be incorrect.</p>
+          <p className="mt-2 text-gray-600">
+            It may have been removed or the link may be incorrect.
+          </p>
           <Link
             to="/"
             className="mt-6 inline-flex rounded-lg bg-blue-600 px-5 py-3 font-semibold text-white transition hover:bg-blue-700"
@@ -86,9 +89,7 @@ export const ProductDetail = () => {
             </div>
 
             <div className="mt-6">
-              <h2 className="text-sm font-semibold text-gray-700">
-                About this product
-              </h2>
+              <h2 className="text-sm font-semibold text-gray-700">About this product</h2>
               <p className="mt-3 whitespace-pre-line leading-7 text-gray-600">
                 {product.description || 'No description is available for this product yet.'}
               </p>
